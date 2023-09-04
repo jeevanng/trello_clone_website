@@ -30,3 +30,45 @@ body {
     height: 10dvh;
 }
 
+/* Styling the column/card row so that it has space to show it's content */
+.displayRow {
+    margin: 0;
+    display: flex;
+    height: 70dvh;
+    padding: 1%;
+}
+
+/* All columns inside the formRow will have spacing and a default size */
+.formRow > .column {
+    width: 50dvw;
+    padding: 1dvw;
+    margin: 0;
+}
+
+.trelloColumn {
+    width: 33%;
+    background-color: grey;
+    min-height: 80%;
+    /* Allows the column to resize when you drop box into column and take max-content as the height */
+    height: max-content;
+    margin: 1%;
+}
+
+/* All trello cards, even the one in the preview section that does not exist inside a column*/
+.trelloCard {
+    background-color: darkgoldenrod;
+    width: 90%;
+    height: 10dvh;
+    text-align: center;
+    margin: 0;
+}
+
+/* Trello cards that exist inside a column */
+.trelloColumn > .trelloCard {
+    margin: 5%;
+}
+
+/* Style the card in the preview section */
+#cardPreview {
+    background-color: wheat;
+}
