@@ -17,6 +17,9 @@ function renderColumns(){
         console.log(column.name);
 
         let columnNode = document.createElement("div");
+        
+        // Set column ID in DOM
+        columnNode.id = column.name;
 
         columnNode.classList.add("trelloColumn");
 
@@ -84,6 +87,32 @@ function dropCard(event){
     // Find out what was dropped
     let data = event.dataTransfer.getData("text");
     console.log("Dropped card ID is:" + data);
+
+    let oldCardElement = document.getElementById(data);
+    let oldCardData = {
+        // getElementsByClassName is an array, so we need [0] and we get the specific card by the oldCardElement
+        title: oldCardElement.getElementsByClassName("cardDisplay-title")[0].innerText,
+        content: oldCardElement.getElementsByClassName("cardDisplay-content")[0].innerText,
+        timestamp: oldCardElement.id
+    }
+
+    // Find the column data for the column that we just dragged 
+    // the card on to, and push that card into it's data
+    trelloData.columns.forEach(column => {
+
+        column.cards = column.cards.filter(card => card.timestamp != oldCardData.timestamp);
+        
+        if (column.name == event.target.id){
+            column.cards.push(oldCardData);
+        } else {
+            console.log("Dropped id is:" + event.target.id);
+        }
+    });
+
+    console.log("New trello data is:\n" + JSON.stringify(trelloData, null, 4));
+
+    // Any time we modify trelloData, we should re-render the columns & cards
+    renderColumns();
 }
 
 
